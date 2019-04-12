@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        ul {
+            list-style-type: none;
+        }
+        .box {
+            width: 492px;
+            height: 4px;
+            border-radius: 10px;
+            margin: 50px auto;
+        }
+        li {
+            float: left;
+            width: 160px;
+            height: 160px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            border: 1px solid #000;
+            margin-left: 4px;
+            margin-top: 4px;
+            font-size: 40px;
+            padding: 20px;
+            text-align: center;
+            line-height: 60px;
+            box-shadow: 4px 4px 8px 0px #ccc inset,-4px -4px 8px 0px #ccc inset;
+        }
+        
+        #btn {
+            cursor: pointer;
+        }
+
+        .msg {
+            width: 400px;
+            height:100px;
+            border: 10px solid gold;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-top: -55px;
+            margin-left: -205px;
+            background-color: #fff;
+            font-size: 88px;
+            text-align: center;
+            line-height: 100px;
+            color: gold;
+            text-shadow: 0 0 10px #f00;
+            animation: txt 1s linear infinite;
+        }
+
+        @keyframes txt{
+            0%,100%{
+                text-shadow: 0px 0px 4px #f00;
+            }
+            50% {
+                text-shadow: 0px 0px 12px #f0f;
+            }
+        }
+        .gole{
+            background:gold;
+        }
+        input {
+            margin-left: 200px;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="box">
+        <ul>
+            <li class="item">一等奖</li>
+            <li class="item">二等奖</li>
+            <li class="item">三等奖</li>
+            <li class="item">四等奖</li>
+            <li id="btn">开始抽奖</li>
+            <li class="item">五等奖</li>
+            <li class="item">六等奖</li>
+            <li class="item">七等奖</li>
+            <li class="item">谢谢惠顾</li>
+        </ul>
+    </div>
+    <div class="msg">特等奖</div>
+    <input type="button" name="" id="btn1" value="按钮">
+    <script>
+        var msg =document.querySelector('.msg');
+        var aItem = document.querySelectorAll('.item');
+        var list = [0,1,2,4,7,6,5,3];
+        //设置索引值
+        var index = 0;
+        // //设置一个定时器的变量。
+        var k =1000;
+        // //点击关闭
+        msg.onclick =off;
+        // //设置定时器
+        var timer = setInterval(function(){
+            k = k+100;
+            index++;
+            if(index > 7){
+                index = 0;
+            }
+            window.k=k;
+            console.log(aItem[list[index]],k);
+        },window.k);
+        console.log(k);
+
+        //点击关闭类名为MSG的DIV
+        function off(){
+                msg.style.display = 'none';
+            }
+            document.getElementById("btn1").onclick=function() {
+                clearInterval(timer);
+            }
+
+    </script>
+</body>
+</html>
