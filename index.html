@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,15 +10,18 @@
             margin: 0;
             padding: 0;
         }
+
         ul {
             list-style-type: none;
         }
+
         .box {
             width: 492px;
             height: 4px;
             border-radius: 10px;
             margin: 50px auto;
         }
+
         li {
             float: left;
             width: 160px;
@@ -32,18 +35,21 @@
             padding: 20px;
             text-align: center;
             line-height: 60px;
-            box-shadow: 4px 4px 8px 0px #ccc inset,-4px -4px 8px 0px #ccc inset;
+            box-shadow: 4px 4px 8px 0px #ccc inset, -4px -4px 8px 0px #ccc inset;
         }
-        
+
         #btn {
             cursor: pointer;
+            background-color: gold;
+            color: #fff;
         }
 
         .msg {
             width: 400px;
-            height:100px;
+            height: 100px;
             border: 10px solid gold;
             position: fixed;
+            cursor: pointer;
             top: 50%;
             left: 50%;
             margin-top: -55px;
@@ -54,72 +60,116 @@
             line-height: 100px;
             color: gold;
             text-shadow: 0 0 10px #f00;
+
             animation: txt 1s linear infinite;
         }
 
-        @keyframes txt{
-            0%,100%{
+        @keyframes txt {
+            0%, 100% {
                 text-shadow: 0px 0px 4px #f00;
             }
             50% {
                 text-shadow: 0px 0px 12px #f0f;
             }
         }
-        .gole{
-            background:gold;
-        }
-        input {
-            margin-left: 200px;
-        }
     </style>
-
 </head>
 <body>
-    <div class="box">
-        <ul>
-            <li class="item">一等奖</li>
-            <li class="item">二等奖</li>
-            <li class="item">三等奖</li>
-            <li class="item">四等奖</li>
-            <li id="btn">开始抽奖</li>
-            <li class="item">五等奖</li>
-            <li class="item">六等奖</li>
-            <li class="item">七等奖</li>
-            <li class="item">谢谢惠顾</li>
-        </ul>
-    </div>
-    <div class="msg">特等奖</div>
-    <input type="button" name="" id="btn1" value="按钮">
-    <script>
-        var msg =document.querySelector('.msg');
-        var aItem = document.querySelectorAll('.item');
-        var list = [0,1,2,4,7,6,5,3];
-        //设置索引值
-        var index = 0;
-        // //设置一个定时器的变量。
-        var k =1000;
-        // //点击关闭
-        msg.onclick =off;
-        // //设置定时器
-        var timer = setInterval(function(){
-            k = k+100;
-            index++;
-            if(index > 7){
-                index = 0;
-            }
-            window.k=k;
-            console.log(aItem[list[index]],k);
-        },window.k);
-        console.log(k);
-
-        //点击关闭类名为MSG的DIV
-        function off(){
-                msg.style.display = 'none';
-            }
-            document.getElementById("btn1").onclick=function() {
-                clearInterval(timer);
-            }
-
-    </script>
+<div class="box">
+    <ul>
+        <li class="item">一等奖</li>
+        <li class="item">二等奖</li>
+        <li class="item">三等奖</li>
+        <li class="item">四等奖</li>
+        <li id="btn">开始抽奖</li>
+        <li class="item">五等奖</li>
+        <li class="item">六等奖</li>
+        <li class="item">七等奖</li>
+        <li class="item">谢谢惠顾</li>
+    </ul>
+</div>
+<div class="msg">特等奖</div>
 </body>
 </html>
+<script>
+    /**
+     *       document.querySelectorAll(CSS选择器)
+     *           获取到的是伪数组格式数据
+     **/
+
+
+    /* 需求1：当__中奖信息盒子__被__点击__时，效果是__隐藏盒子__ */
+    // 1.0  查找中奖信息盒子
+    var msgs = document.querySelectorAll('.msg');
+    // 1.0.1 点击中奖信息盒子隐藏起来
+    msgs[0].onclick = function () {
+        this.style.display = 'none';
+    };
+
+
+    /* 需求2：当__开始抽奖按钮__被__点击__时，效果是__开始抽奖__ */
+    // 2.0.1 找到点击按钮,querySelectorAll 伪数组
+    var btns = document.querySelectorAll('#btn');
+    // 通过类名找到所有 item
+    var item = document.querySelectorAll('.item');
+    //* 3.0 为了让运动变成顺时针运动，准备新数组，重新排列的所有节点顺序 */
+    var newItem = [item[0], item[1], item[2], item[4], item[7], item[6], item[5], item[3]];
+    // console.log(item);
+
+    // 创建一个变量(虚拟索引值)，用于控制第几个盒子变色
+    var key = 0;
+    // 2.0.3 点击抽奖按钮开始抽奖
+    btns[0].onclick = choujiang;
+
+    /* 改变→  5.0 把抽奖次数封装成函数  */
+    function choujiang() {
+        console.log('开始抽奖逻辑了');
+
+        /* 改变→ 5.0.1 一开始抽奖，按钮就不能再点击了，解绑按钮的点击事件 */
+        btns[0].onclick = null;
+        /* 改变→ 5.0.2 点击抽奖按钮的时候，中奖提示框盒子先隐藏  */
+        msgs[0].style.display = 'none';
+
+        //* 点击按钮的时候，随机生成一个次数，定时器运行多少次有这个次数控制 */
+        var cishu = parseInt(Math.random() * 20) + 10;  // 至少10次
+        // 2.0.4 启动定时器，抽奖过程，让盒子一定时间间隔变颜色
+        var timer = setInterval(function () {
+
+            //* 定时器每执行一次，次数就要减少1 */
+            cishu--;
+            // 如果次数为 0
+            if (cishu == 0) {
+                // 如果次数为0，就清除定时器停下来
+                clearInterval(timer);
+                // 改变中奖提示框的文字
+                msgs[0].innerText = newItem[key].innerText;
+                /* 改变→  5.0.3 抽奖提示盒子要显示 */
+                msgs[0].style.display = 'block';
+                /* 改变→  5.0.4 抽奖结束后从新绑定事件 */
+                btns[0].onclick = choujiang;
+            }
+
+            // 2.0.7 排他思想，排除所有盒子，去除颜色
+            for (var i = 0; i < newItem.length; i++) {
+                // 循环遍历内部
+                newItem[i].style.backgroundColor = '';
+            }
+
+            // 2.0.8 根据 key 索引值选中对应的盒子，填充颜色
+            //* 3.0.1 把前面的数组改成 newItem，按照顺时针顺序运动 */
+            newItem[key].style.backgroundColor = 'pink';
+
+            // 2.0.5 每隔一段时间间隔，key 加 1
+            key++;
+            // 2.0.6 注意key的取值范围，不能超过 item 的最大索引值
+            if (key > item.length - 1) {
+                key = 0;
+            }
+
+            console.log(key);     // 测试使用
+
+        }, 100)
+    }
+
+
+</script>
